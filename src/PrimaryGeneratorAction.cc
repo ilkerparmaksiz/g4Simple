@@ -28,7 +28,7 @@
 /// \brief Implementation of the B1::PrimaryGeneratorAction class
 
 #include "PrimaryGeneratorAction.hh"
-
+#include "G4AnalysisManager.hh"
 namespace B1
 {
 
@@ -50,7 +50,18 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
+    auto ana = G4AnalysisManager::Instance();
     gps->GeneratePrimaryVertex(anEvent);
+
+    G4int id=0;
+    ana->FillNtupleIColumn(id,0,anEvent->GetEventID());
+    ana->FillNtupleSColumn(id,1,gps->GetParticleDefinition()->GetParticleName());
+    ana->FillNtupleIColumn(id,2,gps->GetParticleDefinition()->GetPDGEncoding());
+    ana->FillNtupleDColumn(id,3,gps->GetParticlePosition().X);
+    ana->FillNtupleDColumn(id,4,gps->GetParticlePosition().Y);
+    ana->FillNtupleDColumn(id,5,gps->GetParticlePosition().Z);
+    ana->FillNtupleDColumn(id,6,gps->GetParticleEnergy());
+    ana->AddNtupleRow(id);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

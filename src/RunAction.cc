@@ -51,6 +51,8 @@ void RunAction::BeginOfRunAction(const G4Run* run)
 
     ana->CreateNtuple("GPS", "Primary Particle Info");
     ana->CreateNtupleIColumn("evtid");
+    ana->CreateNtupleSColumn("pname");
+    ana->CreateNtupleIColumn("pdg");
     ana->CreateNtupleDColumn("x");
     ana->CreateNtupleDColumn("y");
     ana->CreateNtupleDColumn("z");
@@ -59,6 +61,8 @@ void RunAction::BeginOfRunAction(const G4Run* run)
 
     ana->CreateNtuple("steps", "Particle Steps");
     ana->CreateNtupleIColumn("evtid");
+    ana->CreateNtupleSColumn("pname");
+    ana->CreateNtupleIColumn("pdg");
     ana->CreateNtupleDColumn("x");
     ana->CreateNtupleDColumn("y");
     ana->CreateNtupleDColumn("z");

@@ -28,7 +28,7 @@
 /// \brief Implementation of the B1::DetectorConstruction class
 
 #include "DetectorConstruction.hh"
-
+#include "G4GDMLParser.hh"
 #include "G4RunManager.hh"
 #include "G4NistManager.hh"
 #include "G4Box.hh"
@@ -99,6 +99,11 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     0,
     0);
 
+  // Save geometry as gdml
+  G4GDMLParser parser;
+  G4String gdmlname="geo.gdml";
+  std::remove(gdmlname.c_str());
+  parser.Write(gdmlname.c_str(),physWorld);
   return physWorld;
 }
 

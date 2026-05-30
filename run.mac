@@ -4,7 +4,6 @@
 # or interactively: Idle> /control/execute run1.mac
 #
 # Change the default number of workers (in multi-threading mode) 
-#/run/numberOfThreads 4
 #
 # Initialize kernel
 /run/numberOfThreads 1
@@ -24,13 +23,13 @@
 # momentum direction
 #/gps/direction 0 0 -1
 # Mono Energetic
-/gps/ene/type Mono
-/gps/energy 7 eV
+#/gps/ene/type Mono
+#/gps/energy 7 eV
 
 # Gaussian Profile
-#/gps/ene/type Gauss
-#/gps/ene/mono 10 eV
-#/gps/ene/sigma 3 eV
+/gps/ene/type Gauss
+/gps/ene/mono 10 eV
+/gps/ene/sigma 3 eV
 
 # Uniform distribution
 #/gps/ene/type Lin
@@ -40,4 +39,4 @@
 #/gps/ene/intercept 1
 
 # run number of events
-/run/beamOn 1000
+/run/beamOn 10000
