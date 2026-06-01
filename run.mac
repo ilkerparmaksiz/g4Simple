@@ -40,4 +40,4 @@
 #/gps/ene/intercept 1
 
 # run number of events
-/run/beamOn 100
+/run/beamOn 1000

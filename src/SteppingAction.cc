@@ -56,9 +56,9 @@ namespace B1
             ana->FillNtupleIColumn(id,0,eventID);
             ana->FillNtupleSColumn(id,1,atrack->GetParticleDefinition()->GetParticleName());
             ana->FillNtupleIColumn(id,2,atrack->GetParticleDefinition()->GetPDGEncoding());
-            ana->FillNtupleDColumn(id,3,atrack->GetPosition().X);
-            ana->FillNtupleDColumn(id,4,atrack->GetPosition().Y);
-            ana->FillNtupleDColumn(id,5,atrack->GetPosition().Z);
+            ana->FillNtupleDColumn(id,3,atrack->GetPosition().x());
+            ana->FillNtupleDColumn(id,4,atrack->GetPosition().y());
+            ana->FillNtupleDColumn(id,5,atrack->GetPosition().z());
             ana->FillNtupleDColumn(id,6,atrack->GetTotalEnergy()/CLHEP::eV);
             ana->FillNtupleSColumn(id,7,PreVol);
             ana->FillNtupleSColumn(id,8,PostVol);

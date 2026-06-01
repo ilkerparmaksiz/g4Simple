@@ -30,9 +30,9 @@ G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* )
     ana->FillNtupleIColumn(id,0,eventID);
     ana->FillNtupleSColumn(id,1,atrack->GetParticleDefinition()->GetParticleName());
     ana->FillNtupleIColumn(id,2,atrack->GetParticleDefinition()->GetPDGEncoding());
-    ana->FillNtupleDColumn(id,3,aStep->GetPostStepPoint()->GetPosition().X);
-    ana->FillNtupleDColumn(id,4,aStep->GetPostStepPoint()->GetPosition().Y);
-    ana->FillNtupleDColumn(id,5,aStep->GetPostStepPoint()->GetPosition().Z);
+    ana->FillNtupleDColumn(id,3,aStep->GetPostStepPoint()->GetPosition().x());
+    ana->FillNtupleDColumn(id,4,aStep->GetPostStepPoint()->GetPosition().y());
+    ana->FillNtupleDColumn(id,5,aStep->GetPostStepPoint()->GetPosition().z());
     ana->FillNtupleDColumn(id,6,aStep->GetTrack()->GetGlobalTime());
     ana->FillNtupleDColumn(id,7,edep);
     ana->FillNtupleSColumn(id,8,fname);

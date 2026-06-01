@@ -29,8 +29,8 @@
 
 # Gaussian Profile
 /gps/ene/type Gauss
-/gps/ene/mono 50 keV
-/gps/ene/sigma 100 keV
+/gps/ene/mono 500 keV
+/gps/ene/sigma 10 keV
 
 # Uniform distribution
 #/gps/ene/type Lin
@@ -40,4 +40,4 @@
 #/gps/ene/intercept 1
 
 # run number of events
-/run/beamOn 30
+/run/beamOn 10000
