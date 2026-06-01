@@ -83,6 +83,19 @@ void RunAction::BeginOfRunAction(const G4Run* run)
     ana->CreateNtupleDColumn("kenergy");
     ana->CreateNtupleSColumn("PreVol");
     ana->CreateNtupleSColumn("PostVol");
+    ana->FinishNtuple();
+
+    ana->CreateNtuple("ohits", "Optical Photon hits");
+    ana->CreateNtupleIColumn("evtid");
+    ana->CreateNtupleSColumn("pname");
+    ana->CreateNtupleIColumn("pdg");
+    ana->CreateNtupleDColumn("x");
+    ana->CreateNtupleDColumn("y");
+    ana->CreateNtupleDColumn("z");
+    ana->CreateNtupleDColumn("t");
+    ana->CreateNtupleDColumn("edep");
+    ana->CreateNtupleSColumn("det_name");
+    ana->CreateNtupleIColumn("TrackId");
 
     ana->FinishNtuple();
 
