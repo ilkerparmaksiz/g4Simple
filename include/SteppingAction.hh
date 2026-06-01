@@ -29,11 +29,10 @@
 
 #ifndef B1SteppingAction_h
 #define B1SteppingAction_h 1
-
+#include "G4AnalysisManager.hh"
 #include "G4UserSteppingAction.hh"
 #include "globals.hh"
 
-class G4LogicalVolume;
 
 namespace B1
 {
@@ -48,7 +47,7 @@ class SteppingAction : public G4UserSteppingAction
 
     // method from the base class
     void UserSteppingAction(const G4Step*) override;
-
+    G4AnalysisManager *ana;
 };
 
 }

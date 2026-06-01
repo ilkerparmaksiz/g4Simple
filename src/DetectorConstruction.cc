@@ -32,14 +32,12 @@
 #include "G4RunManager.hh"
 #include "G4NistManager.hh"
 #include "G4Box.hh"
-#include "G4Cons.hh"
-#include "G4Orb.hh"
-#include "G4Sphere.hh"
+#include "SensitiveDetector.hh"
 #include "G4Trd.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
-
+#include "G4SDManager.hh"
 namespace B1
 {
 
@@ -53,12 +51,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Define Geometry size
   G4double  WorldSize =20*cm;
   G4double  ShieldSize = WorldSize/2+2*cm;
-  G4double  DetSize = WorldSize/2;
+  G4double  ArSize = WorldSize/2;
 
 
   // Materials
   G4Material* World_mat = nist->FindOrBuildMaterial("G4_AIR");
-  G4Material* Det_mat = nist->FindOrBuildMaterial("G4_Ar");
+  G4Material* Ar_mat = nist->FindOrBuildMaterial("G4_Ar");
   G4Material* Shield_mat = nist->FindOrBuildMaterial("G4_STAINLESS-STEEL");
 
   // World Volume
@@ -89,15 +87,16 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     0,
     0);
 
-  auto solidDet = new G4Box("Det",0.5 * DetSize, 0.5 * DetSize, 0.5 * DetSize);  // its size
-  auto logicDet= new G4LogicalVolume(solidDet,Det_mat,"Det_LV");
+  auto solidAr = new G4Box("Ar",0.5 * ArSize, 0.5 * ArSize, 0.5 * ArSize);  // its size
+  auto logicAr= new G4LogicalVolume(solidAr,Ar_mat,"Ar_LV");
    new G4PVPlacement(nullptr,
     G4ThreeVector(),
-    logicDet,"Det_PV",
-    logicWorld,
+    logicAr,"Ar_PV",
+    logicShield,
     false,
     0,
     0);
+
 
   // Save geometry as gdml
   G4GDMLParser parser;
@@ -105,6 +104,17 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   std::remove(gdmlname.c_str());
   parser.Write(gdmlname.c_str(),physWorld);
   return physWorld;
+}
+
+  void DetectorConstruction::ConstructSDandField()
+{
+
+  // Sensitive Detector
+  auto sd = new SensitiveDetector("IonizationAr");
+  G4SDManager::GetSDMpointer()->AddNewDetector(sd);
+
+  // Attach by name (recommended)
+  SetSensitiveDetector("Ar_LV", sd);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

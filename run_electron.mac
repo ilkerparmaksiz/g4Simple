@@ -16,7 +16,7 @@
 /tracking/verbose 1
 #
 #
-/gps/particle opticalphoton
+/gps/particle e-
 /gps/pos/type Point
 /gps/pos/centre 0 0 0 cm
 /gps/ang/type iso
@@ -29,8 +29,8 @@
 
 # Gaussian Profile
 /gps/ene/type Gauss
-/gps/ene/mono 10 eV
-/gps/ene/sigma 3 eV
+/gps/ene/mono 1 MeV
+/gps/ene/sigma 200 keV
 
 # Uniform distribution
 #/gps/ene/type Lin

@@ -59,7 +59,21 @@ void RunAction::BeginOfRunAction(const G4Run* run)
     ana->CreateNtupleDColumn("kenergy");
     ana->FinishNtuple();
 
-    ana->CreateNtuple("steps", "Particle Steps");
+    ana->CreateNtuple("hits", "Particle hits");
+    ana->CreateNtupleIColumn("evtid");
+    ana->CreateNtupleSColumn("pname");
+    ana->CreateNtupleIColumn("pdg");
+    ana->CreateNtupleDColumn("x");
+    ana->CreateNtupleDColumn("y");
+    ana->CreateNtupleDColumn("z");
+    ana->CreateNtupleDColumn("t");
+    ana->CreateNtupleDColumn("edep");
+    ana->CreateNtupleSColumn("det_name");
+    ana->CreateNtupleIColumn("TrackId");
+    ana->FinishNtuple();
+
+
+    ana->CreateNtuple("final", "Information about particle at its final destination");
     ana->CreateNtupleIColumn("evtid");
     ana->CreateNtupleSColumn("pname");
     ana->CreateNtupleIColumn("pdg");
@@ -67,6 +81,9 @@ void RunAction::BeginOfRunAction(const G4Run* run)
     ana->CreateNtupleDColumn("y");
     ana->CreateNtupleDColumn("z");
     ana->CreateNtupleDColumn("kenergy");
+    ana->CreateNtupleSColumn("PreVol");
+    ana->CreateNtupleSColumn("PostVol");
+
     ana->FinishNtuple();
 
 }

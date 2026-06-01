@@ -29,19 +29,41 @@
 
 #include "SteppingAction.hh"
 #include "G4RunManager.hh"
-
-
+#include "G4OpticalPhoton.hh"
+#include "G4Event.hh"
+#include "G4RunManager.hh"
 namespace B1
 {
 
     SteppingAction::SteppingAction()
     {
-
+        ana=G4AnalysisManager::Instance();
     }
 
 
     void SteppingAction::UserSteppingAction(const G4Step* step)
     {
+        auto atrack = step->GetTrack();
+        G4int eventID = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
+
+        if (atrack->GetTrackStatus()==fStopAndKill  && atrack->GetParticleDefinition()==G4OpticalPhoton::Definition())
+        {
+            G4String PreVol="None",PostVol="None";
+            if (step->GetPreStepPoint()->GetPhysicalVolume()) PreVol=step->GetPreStepPoint()->GetPhysicalVolume()->GetName();
+            if (step->GetPostStepPoint()->GetPhysicalVolume()) PostVol=step->GetPostStepPoint()->GetPhysicalVolume()->GetName();
+
+            G4int id=2;
+            ana->FillNtupleIColumn(id,0,eventID);
+            ana->FillNtupleSColumn(id,1,atrack->GetParticleDefinition()->GetParticleName());
+            ana->FillNtupleIColumn(id,2,atrack->GetParticleDefinition()->GetPDGEncoding());
+            ana->FillNtupleDColumn(id,3,atrack->GetPosition().X);
+            ana->FillNtupleDColumn(id,4,atrack->GetPosition().Y);
+            ana->FillNtupleDColumn(id,5,atrack->GetPosition().Z);
+            ana->FillNtupleDColumn(id,6,atrack->GetTotalEnergy()/CLHEP::eV);
+            ana->FillNtupleSColumn(id,7,PreVol);
+            ana->FillNtupleSColumn(id,8,PostVol);
+            ana->AddNtupleRow(id);
+        }
 
     }
 }

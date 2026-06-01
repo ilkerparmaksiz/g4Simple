@@ -34,7 +34,6 @@
 #include "globals.hh"
 
 class G4VPhysicalVolume;
-class G4LogicalVolume;
 
 namespace B1
 {
@@ -49,10 +48,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
     G4VPhysicalVolume* Construct() override;
 
-    G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
+    void ConstructSDandField() override;
 
-  protected:
-    G4LogicalVolume* fScoringVolume = nullptr;
 };
 
 }
