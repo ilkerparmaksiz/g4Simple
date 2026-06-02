@@ -53,6 +53,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     void ConstructSDandField() override;
 
     G4MaterialPropertiesTable * GAr();
+    G4MaterialPropertiesTable * LAr();
     G4double optPhotMinE_ =  0.2  * CLHEP::eV;
     G4double optPhotMaxE_ = 11.5  * CLHEP::eV;
     G4double noAbsLength_ = 1.e8  * CLHEP::m;
