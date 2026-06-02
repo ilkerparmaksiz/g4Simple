@@ -57,6 +57,9 @@ void RunAction::BeginOfRunAction(const G4Run* run)
     ana->CreateNtupleDColumn("y");
     ana->CreateNtupleDColumn("z");
     ana->CreateNtupleDColumn("kenergy");
+    ana->CreateNtupleDColumn("mdx");
+    ana->CreateNtupleDColumn("mdy");
+    ana->CreateNtupleDColumn("mdz");
     ana->FinishNtuple();
 
     ana->CreateNtuple("hits", "Particle hits");

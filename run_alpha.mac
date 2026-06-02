@@ -16,7 +16,7 @@
 /tracking/verbose 1
 #
 #
-/gps/particle e-
+/gps/particle alpha
 /gps/pos/type Point
 /gps/pos/centre 0 0 0 cm
 /gps/ang/type iso
@@ -29,8 +29,8 @@
 
 # Gaussian Profile
 /gps/ene/type Gauss
-/gps/ene/mono 30 keV
-/gps/ene/sigma 1 keV
+/gps/ene/mono 1 MeV
+/gps/ene/sigma 200 keV
 
 # Uniform distribution
 #/gps/ene/type Lin

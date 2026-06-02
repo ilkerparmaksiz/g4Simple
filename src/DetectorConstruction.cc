@@ -39,6 +39,7 @@
 #include "G4PVPlacement.hh"
 #include "G4VisAttributes.hh"
 #include "G4SDManager.hh"
+#include "G4UserLimits.hh"
 using namespace CLHEP;
 namespace B1
 {

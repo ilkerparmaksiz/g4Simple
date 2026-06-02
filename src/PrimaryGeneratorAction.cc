@@ -57,10 +57,13 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     ana->FillNtupleIColumn(id,0,anEvent->GetEventID());
     ana->FillNtupleSColumn(id,1,gps->GetParticleDefinition()->GetParticleName());
     ana->FillNtupleIColumn(id,2,gps->GetParticleDefinition()->GetPDGEncoding());
-    ana->FillNtupleDColumn(id,3,gps->GetParticlePosition().X);
-    ana->FillNtupleDColumn(id,4,gps->GetParticlePosition().Y);
-    ana->FillNtupleDColumn(id,5,gps->GetParticlePosition().Z);
+    ana->FillNtupleDColumn(id,3,gps->GetParticlePosition().x());
+    ana->FillNtupleDColumn(id,4,gps->GetParticlePosition().y());
+    ana->FillNtupleDColumn(id,5,gps->GetParticlePosition().z());
     ana->FillNtupleDColumn(id,6,gps->GetParticleEnergy());
+    ana->FillNtupleDColumn(id,7,gps->GetParticleMomentumDirection().x());
+    ana->FillNtupleDColumn(id,8,gps->GetParticleMomentumDirection().y());
+    ana->FillNtupleDColumn(id,9,gps->GetParticleMomentumDirection().z());
     ana->AddNtupleRow(id);
 }
 

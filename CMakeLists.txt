@@ -45,6 +45,7 @@ set(EXAMPLEB1_SCRIPTS
   run.mac
   vis.mac
   run_electron.mac
+  run_alpha.mac
   )
 
 foreach(_script ${EXAMPLEB1_SCRIPTS})
