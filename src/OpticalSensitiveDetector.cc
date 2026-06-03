@@ -17,7 +17,7 @@ OpticalSensitiveDetector::OpticalSensitiveDetector(const G4String& name) : G4VSe
 G4bool OpticalSensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* )
 {
     G4Track* atrack = aStep->GetTrack();
-    std::cout << "Optical Processing .. " <<std::endl;
+    //std::cout << "Optical Processing .. " <<std::endl;
     if (atrack->GetParticleDefinition() != G4OpticalPhoton::Definition()) return false;
     G4double edep = atrack->GetTotalEnergy();
 

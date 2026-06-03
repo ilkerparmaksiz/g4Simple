@@ -32,7 +32,7 @@
 
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
-
+#include "G4GenericMessenger.hh"
 #include "G4PhysicalConstants.hh"
 class G4MaterialPropertiesTable;
 class G4VPhysicalVolume;
@@ -45,8 +45,8 @@ namespace B1
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
-    DetectorConstruction() = default;
-    ~DetectorConstruction() override = default;
+    DetectorConstruction() ; //= default;
+    ~DetectorConstruction() ;
 
     G4VPhysicalVolume* Construct() override;
 
@@ -58,7 +58,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4double optPhotMaxE_ = 11.5  * CLHEP::eV;
     G4double noAbsLength_ = 1.e8  * CLHEP::m;
     G4double hc_ = CLHEP::h_Planck * CLHEP::c_light;
-
+    G4double stepLimit;
+    G4String Arphase;
+    G4GenericMessenger* fMessenger;
 };
 
 }

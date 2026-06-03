@@ -8,12 +8,18 @@
 #
 # Initialize kernel
 /run/numberOfThreads 1
+
+# Custom Geometry related commands
+/Geometry/ArPhase Gas
+/Geometry/steplim 0.7 mm
+
+
 /run/initialize
 #
 /control/verbose 2
 /run/verbose 2
 /event/verbose 0
-/tracking/verbose 1
+/tracking/verbose 0
 #
 #
 /gps/particle alpha

@@ -8,13 +8,19 @@
 #
 # Initialize kernel
 /run/numberOfThreads 1
+# Custom Geometry related commands
+/Geometry/ArPhase Gas
+/Geometry/steplim 0.1 mm
+
 /run/initialize
 #
 /control/verbose 2
 /run/verbose 2
 /event/verbose 0
-/tracking/verbose 1
+/tracking/verbose 0
 #
+#Geometry
+
 #
 /gps/particle e-
 /gps/pos/type Point
@@ -29,8 +35,8 @@
 
 # Gaussian Profile
 /gps/ene/type Gauss
-/gps/ene/mono 30 keV
-/gps/ene/sigma 1 keV
+/gps/ene/mono 40 keV
+/gps/ene/sigma 2 keV
 
 # Uniform distribution
 #/gps/ene/type Lin

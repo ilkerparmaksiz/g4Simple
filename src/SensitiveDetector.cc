@@ -21,7 +21,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* )
     if (atrack->GetParticleDefinition()==G4OpticalPhoton::Definition()) return false;
     G4double edep = aStep->GetTotalEnergyDeposit();
     // Discard steps where no energy was deposited in the detector
-    if (edep <= 0.) return false;
+    if (edep <= 1*CLHEP::eV) return false;
 
     // Create a hit and set its properties
     G4int id=1;

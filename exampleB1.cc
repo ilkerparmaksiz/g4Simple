@@ -38,6 +38,7 @@
 #include "G4UIExecutive.hh"
 
 #include "G4OpticalPhysics.hh"
+#include "G4StepLimiterPhysics.hh"
 using namespace B1;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -62,6 +63,8 @@ int main(int argc,char** argv)
   // Physics list
   auto physicsList = new FTFP_BERT;
   physicsList->RegisterPhysics(new G4OpticalPhysics());
+
+  physicsList->RegisterPhysics(new G4StepLimiterPhysics());
   runManager->SetUserInitialization(physicsList);
 
   // User action initialization
@@ -85,7 +88,7 @@ int main(int argc,char** argv)
   else {
     // interactive mode
     UImanager->ApplyCommand("/control/execute vis.mac");
-    UImanager->ApplyCommand("/control/execute run.mac");
+    UImanager->ApplyCommand("/control/execute run_opticalphoton.mac");
     ui->SessionStart();
     delete ui;
   }

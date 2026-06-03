@@ -28,6 +28,8 @@
 /// \brief Implementation of the B1::DetectorConstruction class
 
 #include "DetectorConstruction.hh"
+
+
 #include "G4GDMLParser.hh"
 #include "G4RunManager.hh"
 #include "G4NistManager.hh"
@@ -40,9 +42,22 @@
 #include "G4VisAttributes.hh"
 #include "G4SDManager.hh"
 #include "G4UserLimits.hh"
+
 using namespace CLHEP;
 namespace B1
 {
+
+DetectorConstruction::DetectorConstruction():stepLimit(0.4*mm),Arphase("Liquid") {
+  fMessenger= new G4GenericMessenger(this,"/Geometry/","Geometry control");
+  fMessenger->DeclarePropertyWithUnit("steplim", "mm" ,stepLimit ,"Finner steps");
+  fMessenger->DeclareProperty("ArPhase",Arphase,"Argon Phase Liquid or Gas");
+
+}
+
+DetectorConstruction::~DetectorConstruction() {
+  delete fMessenger;
+}
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -78,7 +93,6 @@ G4MaterialPropertiesTable* DetectorConstruction::GAr()
       //       << " eV -> " << rIndex[i] << G4endl;
     }
     mpt->AddProperty("RINDEX", ri_energy, rIndex);
-
 
     // EMISSION SPECTRUM
     G4double Wavelength_peak  = 128.000 * nm;
@@ -190,11 +204,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   // Materials
   G4Material* World_mat = nist->FindOrBuildMaterial("G4_AIR");
-  G4Material* Ar_mat = nist->FindOrBuildMaterial("G4_Ar");
   G4Material* Shield_mat = nist->FindOrBuildMaterial("G4_STAINLESS-STEEL");
   G4Material* Det_mat = nist->FindOrBuildMaterial("G4_Si");
+  G4Material *Ar_mat=nullptr;
   //Gas Argon
-  Ar_mat->SetMaterialPropertiesTable(GAr());
+  G4Material* GAr_mat = nist->FindOrBuildMaterial("G4_Ar");
+  GAr_mat->SetMaterialPropertiesTable(GAr());
 
   // Liquid Argon
   G4double LArdensity = 1.396*g/cm3;
@@ -243,15 +258,28 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     0);
 
   auto solidAr = new G4Box("Ar",0.5 * ArSize, 0.5 * ArSize, 0.5 * ArSize);  // its size
+
+  // Gas or Liquid for Ionization Region
+  G4String name="GAr";
+  if (Arphase=="Gas") Ar_mat=GAr_mat;
+  else
+  {
+    Ar_mat=LAr_mat;
+    name="LAr";
+  }
+
+
   auto logicAr= new G4LogicalVolume(solidAr,Ar_mat,"Ar_LV");
+  logicAr->SetUserLimits(new G4UserLimits(stepLimit)); // Step limit to 1 mm to better sample scintillation light production
    new G4PVPlacement(nullptr,
     G4ThreeVector(),
-    logicAr,"Ar_PV",
+    logicAr,(name+"_PV").c_str(),
     logicShield,
     false,
     0,
     0);
 
+  // Photon Detector
   auto solidDet = new G4Box("Det",(0.5 * ArSize)-1*cm, (0.5 * ArSize)-1*cm, 1*mm);  // its size
   auto logicDet= new G4LogicalVolume(solidDet,Det_mat,"Det_LV");
   new G4PVPlacement(nullptr,
@@ -261,6 +289,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
    false,
    0,
    0);
+
   // Visibilities
 
   // Define color within here or macros
@@ -268,7 +297,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   logicAr->SetVisAttributes(G4VisAttributes(G4Color(0,0,1,0.2))); // Argon
   logicDet->SetVisAttributes(G4VisAttributes(G4Color(0,1,0,1))); // Green
   logicShield->SetVisAttributes(G4VisAttributes(G4Color(1,1,1,0.2))); //White
-
 
 
   // Save geometry as gdml
@@ -291,7 +319,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 
   // Optical Detector
-  // Sensitive Detector
   auto o_sd = new OpticalSensitiveDetector("Optical");
   G4SDManager::GetSDMpointer()->AddNewDetector(o_sd);
 
